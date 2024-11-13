@@ -3,7 +3,7 @@ vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.autoindent = true
 vim.o.number = true
-
+vim.g.mapleader = ' '
 
 local ensure_packer = function()
   local fn = vim.fn
@@ -49,42 +49,24 @@ require('packer').startup(function(use)
 		end
 	}
 
-	 use { 
-	 	'esensar/nvim-dev-container',
-	 	as = 'devcontainer',
-	 	requires = { 'nvim-treesitter/nvim-treesitter' },
-	 	 config = function()
-	 	 	require('devcontainer').setup({
-	 	 		log_level = "debug",
-	 	 		attach_mounts = {
-   	 		  neovim_config = {
-   	 		    -- enables mounting local config to /root/.config/nvim in container
-   	 		    enabled = true,
-   	 		    -- makes mount readonly in container
-   	 		    options = { "readonly" }
-   	 		  },
-   	 		  neovim_data = {
-   	 		    -- enables mounting local data to /root/.local/share/nvim in container
-   	 		    enabled = true,
-   	 		    -- no options by default
-   	 		    options = {}
-   	 		  },
-   	 		  -- Only useful if using neovim 0.8.0+
-   	 		  neovim_state = {
-   	 		    -- enables mounting local state to /root/.local/state/nvim in container
-   	 		    enabled = true,
-   	 		    -- no options by default
-   	 		    options = {}
-   	 		  },
-   	 		},
-	 	 })
-	 	 end
-	 }
+	use "hrsh7th/nvim-cmp"
 
+use({
+-- cmp LSP completion
+"hrsh7th/cmp-nvim-lsp",
+-- cmp Snippet completion
+"hrsh7th/cmp-vsnip",
+-- cmp Path completion
+"hrsh7th/cmp-path",
+"hrsh7th/cmp-buffer",
+after = { "hrsh7th/nvim-cmp" },
+requires = { "hrsh7th/nvim-cmp" },
+})
 
+use("simrat39/rust-tools.nvim")
 end)
 
-
+require("rust")
 -- map leader to space
 vim.g.mapleader = ' '
 
@@ -102,3 +84,4 @@ vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope find_files<CR>', { noremap = t
 
 -- map control + f to telescope live grep
 vim.api.nvim_set_keymap('n', '<C-f>', ':Telescope live_grep<CR>', { noremap = true, silent = true })
+
