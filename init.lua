@@ -36,15 +36,31 @@ require('packer').startup(function(use)
 	use 'nvim-treesitter/nvim-treesitter'
 	
 	use {
-  	'nvim-telescope/telescope.nvim', tag = '0.1.5',
+  	'nvim-telescope/telescope.nvim', tag = '0.1.8',
  		requires = { 
 			{'nvim-lua/plenary.nvim'} 
  		},
 		config = function() 
 			require('telescope').setup {
-				defaults = {
-					file_ignore_patterns = { "node_modules", "vendor", "dist", "build" },
-				}
+								defaults = {
+					file_ignore_patterns = { "node_modules", "vendor", "dist", "build", "target" },
+				 },
+				pickers = {
+    buffers = {
+      show_all_buffers = true,
+      sort_lastused = true,
+      theme = "dropdown",
+      previewer = false,
+      mappings = {
+        i = {
+          ["<c-d>"] = "delete_buffer",
+        },
+				n = {
+          ["d"] = "delete_buffer",
+        }
+      }
+    }
+  },
 			}
 		end
 	}
@@ -67,8 +83,6 @@ use("simrat39/rust-tools.nvim")
 end)
 
 require("rust")
--- map leader to space
-vim.g.mapleader = ' '
 
 -- map ctrl + s to save
 vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
@@ -85,3 +99,8 @@ vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope find_files<CR>', { noremap = t
 -- map control + f to telescope live grep
 vim.api.nvim_set_keymap('n', '<C-f>', ':Telescope live_grep<CR>', { noremap = true, silent = true })
 
+-- Use ctrl-[hjkl] to select the active split!
+vim.api.nvim_set_keymap('n', '<c-k>', ':wincmd k<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<c-j>', ':wincmd j<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<c-h>', ':wincmd h<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<c-l>', ':wincmd l<CR>', { noremap = true, silent = true })
