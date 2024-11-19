@@ -4,6 +4,8 @@
 
 ---@type ChadrcConfig
 
+vim.opt.clipboard = "unnamedplus"
+
 local M = {}
 
 M.plugins = 'custom.plugins'
