@@ -11,7 +11,7 @@ local M = {}
 M.plugins = 'custom.plugins'
 
 M.base46 = {
-	theme = "chadracula-evondev",
+	theme = "flexoki",
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },
